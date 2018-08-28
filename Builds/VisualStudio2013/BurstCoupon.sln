@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2013
+Project("{954E5D3A-FA42-63F8-E875-4434E8139654}") = "BurstCoupon", "BurstCoupon.vcxproj", "{6E91B0A8-DE8C-383E-43F3-611CDAAD22CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E91B0A8-DE8C-383E-43F3-611CDAAD22CF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6E91B0A8-DE8C-383E-43F3-611CDAAD22CF}.Debug|Win32.Build.0 = Debug|Win32
+		{6E91B0A8-DE8C-383E-43F3-611CDAAD22CF}.Release|Win32.ActiveCfg = Release|Win32
+		{6E91B0A8-DE8C-383E-43F3-611CDAAD22CF}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
