@@ -500,7 +500,7 @@ void InterfaceComponent::buttonClicked (Button* buttonThatWasClicked)
 				file.appendText(couponDataEncryptedBase64);
 
 				file.appendText("\n\nLink:\n");
-				file.appendText("https://github.com/CurbShifter/BurstCoupon/blob/master/BurstCoupon-Claim.html?coupon=" + couponDataEncryptedBase64);
+				file.appendText("https://curbshifter.github.io/BurstCoupon/?coupon=" + couponDataEncryptedBase64);
 
 				file.appendText("\n\nExpires:\n");
 				file.appendText(Time(Time::currentTimeMillis() + (deadlineSlider->getValue() * 60 * 1000)).toString(true, true, false));
