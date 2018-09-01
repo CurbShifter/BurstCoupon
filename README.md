@@ -39,11 +39,11 @@ The claim page is very straight forward. Enter the coupon code and the password 
 Claim page
 -
 The recipient does not need the dApp binary to claim the coupon. Only the single static 
-[Burst Coupon Claim page](https://github.com/CurbShifter/BurstCoupon/blob/master/BurstCoupon-Claim.html "Burst Coupon Claim page") is needed. The page only runs self contained client-side javascript to decrypt the coupon and post the transaction to a node.
+[Burst Coupon Claim page](https://curbshifter.github.io/BurstCoupon/ "Burst Coupon Claim page") [source file](https://github.com/CurbShifter/BurstCoupon/blob/master/docs/index.html) is needed. The page only runs self contained client-side javascript to decrypt the coupon and post the transaction to a node.
 
 It is possible to give the recipient a link like this:
 
-https://github.com/CurbShifter/BurstCoupon/blob/master/BurstCoupon-Claim.html?coupon=XXXX
+https://curbshifter.github.io/BurstCoupon/?coupon=XXXX
 
 The 'XXXX' at the end should be replaced the with coupon code. Which saves the recipient the trouble of entering the code in the page. (Please feel free to host your own forked branded coupon claim page it should work the same).
 
