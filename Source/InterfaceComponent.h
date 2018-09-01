@@ -62,6 +62,8 @@ public:
 	PropertiesFile::Options options;
 	String GetAppValue(const String type);
 	void SetAppValue(const String type, const String value);
+
+	void SetView(int viewNr);
     //[/UserMethods]
 
     void paint (Graphics& g) override;
@@ -70,17 +72,23 @@ public:
     void comboBoxChanged (ComboBox* comboBoxThatHasChanged) override;
     void sliderValueChanged (Slider* sliderThatWasMoved) override;
 
+    // Binary resources:
+    static const char* burstcoupon_svg;
+    static const int burstcoupon_svgSize;
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
 	void timerCallback();
+
 	BurstAPI burstAPI;
-	
+
 	void log(String message);
-	ScopedPointer<CloudBurstLookAndFeel> wizlaf;
+	ScopedPointer<BurstCouponLookAndFeel> wizlaf;
 	String myAccount;
 	String myReedSolomon;
+
+	int view;
     //[/UserVariables]
 
     //==============================================================================
@@ -92,7 +100,6 @@ private:
     ScopedPointer<Label> versionLabel;
     ScopedPointer<Label> walletLabel;
     ScopedPointer<TextEditor> passPhraseTextEditor;
-    ScopedPointer<Label> label;
     ScopedPointer<Slider> valueSlider;
     ScopedPointer<Label> walletLabel2;
     ScopedPointer<TextEditor> makePasswordTextEditor;
@@ -110,6 +117,9 @@ private:
     ScopedPointer<Label> walletLabel10;
     ScopedPointer<TextEditor> couponCodeTextEditor;
     ScopedPointer<Label> walletLabel11;
+    ScopedPointer<TextButton> createButton;
+    ScopedPointer<TextButton> claimButton;
+    ScopedPointer<Drawable> drawable1;
 
 
     //==============================================================================

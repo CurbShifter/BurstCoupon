@@ -1,5 +1,5 @@
 /*
-CloudBurst DAPP
+BurstCoupon DAPP
 Copyright (C) 2018  CurbShifter
 
 This program is free software: you can redistribute it and/or modify
@@ -71,8 +71,8 @@ public:
 	var Sign(String unsignedTransactionBytesStr);
 	var Broadcast(String unsignedTransactionBytesStr);
 
-	bool VerifyCoupon(String couponHex, String password);
 	String RedeemCoupon(String couponHex, String password);
+	String CreateCoupon(String recipient, String amountNQT, String feeNQT, String deadlineMinutes, String password);
 
 	var longConvert(String id);
 	var rsConvert(String account);
@@ -90,6 +90,9 @@ public:
 	var GetUnconfirmedTransactions();
 	var GetUnconfirmedTransactionsIds();
 
+	std::string toBase64Encoding(unsigned char const* bytes_to_encode, unsigned int in_len);
+	juce::MemoryBlock fromBase64EncodingToMB(std::string const& encoded_string);
+	std::string fromBase64Encoding(std::string const& encoded_string);
 private:
 	Crypto crypto;
 

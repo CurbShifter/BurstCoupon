@@ -1,7 +1,7 @@
 #include "LookAndFeel.h"
 
 /*
-CloudBurst DAPP
+BurstCoupon DAPP
 Copyright (C) 2018  CurbShifter
 
 This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-void CloudBurstLookAndFeel::Init()
+void BurstCouponLookAndFeel::Init()
 {
 	setColour(TreeView::selectedItemBackgroundColourId, Colour(0xff83acf0));
 
@@ -49,27 +49,27 @@ void CloudBurstLookAndFeel::Init()
 	setColour(ProgressBar::backgroundColourId, Colour(0xbefdfdfd));
 	setColour(ProgressBar::foregroundColourId, Colour(0xff4d90fe));
 }
-void CloudBurstLookAndFeel::setFont(Font f)
+void BurstCouponLookAndFeel::setFont(Font f)
 {
 	brFont = f.withHeight(20);
 }
 
-void CloudBurstLookAndFeel::setFontBold(Font f)
+void BurstCouponLookAndFeel::setFontBold(Font f)
 {
 	brFontBold = f.withHeight(20);
 }
 
-void CloudBurstLookAndFeel::setFontAlt(Font f)
+void BurstCouponLookAndFeel::setFontAlt(Font f)
 {
 	brFontAlt = f.withHeight(20);
 }
 
-Typeface::Ptr 	CloudBurstLookAndFeel::getTypefaceForFont(const Font &)
+Typeface::Ptr 	BurstCouponLookAndFeel::getTypefaceForFont(const Font &)
 {
 	return brFont.getTypeface();
 }
 
-void CloudBurstLookAndFeel::drawDocumentWindowTitleBar(DocumentWindow& window, Graphics& g,
+void BurstCouponLookAndFeel::drawDocumentWindowTitleBar(DocumentWindow& window, Graphics& g,
 	int w, int h, int titleSpaceX, int titleSpaceW,
 	const Image* icon, bool drawTitleTextOnLeft)
 {
@@ -118,7 +118,7 @@ void CloudBurstLookAndFeel::drawDocumentWindowTitleBar(DocumentWindow& window, G
 }
 
 //==============================================================================
-class CloudBurstLookAndFeel::OSXWindowButton : public Button
+class BurstCouponLookAndFeel::OSXWindowButton : public Button
 {
 public:
 	OSXWindowButton(const String& name, Colour col,
@@ -169,7 +169,7 @@ private:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OSXWindowButton)
 };
 
-Button* CloudBurstLookAndFeel::createDocumentWindowButton(int buttonType)
+Button* BurstCouponLookAndFeel::createDocumentWindowButton(int buttonType)
 {
 	Path shape;
 	const float crossThickness = 0.25f;
@@ -203,7 +203,7 @@ Button* CloudBurstLookAndFeel::createDocumentWindowButton(int buttonType)
 	return nullptr;
 }
 
-void CloudBurstLookAndFeel::drawLabel(Graphics& g, Label& label)
+void BurstCouponLookAndFeel::drawLabel(Graphics& g, Label& label)
 {
 	g.fillAll(label.findColour(Label::backgroundColourId));
 
@@ -231,7 +231,7 @@ void CloudBurstLookAndFeel::drawLabel(Graphics& g, Label& label)
 	g.drawRect(label.getLocalBounds());
 }
 
-void CloudBurstLookAndFeel::drawTooltip(Graphics& g, const String& text, int width, int height)
+void BurstCouponLookAndFeel::drawTooltip(Graphics& g, const String& text, int width, int height)
 {
 	g.fillAll(findColour(TooltipWindow::backgroundColourId));
 #if ! JUCE_MAC // The mac windows already have a non-optional 1 pix outline, so don't double it here..
@@ -244,7 +244,7 @@ void CloudBurstLookAndFeel::drawTooltip(Graphics& g, const String& text, int wid
 	g.drawMultiLineText(text, 4, 12, (int)(width - 8.f));
 }
 
-void CloudBurstLookAndFeel::drawRoundThumb (Graphics& g, const float x, const float y,
+void BurstCouponLookAndFeel::drawRoundThumb (Graphics& g, const float x, const float y,
                         const float diameter, const Colour& colour, float outlineThickness)
 {
 	const juce::Rectangle<float> a(x, y, diameter, diameter);
@@ -263,7 +263,7 @@ void CloudBurstLookAndFeel::drawRoundThumb (Graphics& g, const float x, const fl
     g.strokePath (p, PathStrokeType (outlineThickness));
 }
 
-void CloudBurstLookAndFeel::drawButtonText(Graphics& g, TextButton& button, bool /*isMouseOverButton*/, bool /*isButtonDown*/)
+void BurstCouponLookAndFeel::drawButtonText(Graphics& g, TextButton& button, bool /*isMouseOverButton*/, bool /*isButtonDown*/)
 {
 	float fontHeight = jmin<float>(button.getHeight() - 4.f, 16.f);
 	g.setFont(brFontBold.withHeight(fontHeight));
@@ -279,7 +279,7 @@ void CloudBurstLookAndFeel::drawButtonText(Graphics& g, TextButton& button, bool
 	g.drawFittedText(txt, 2, 0, button.getWidth() - 4, button.getHeight(), Justification::centred, 2);
 }
 
-void CloudBurstLookAndFeel::drawButtonBackground (Graphics& g, Button& button, const Colour& /*backgroundColour*/, bool isMouseOverButton, bool isButtonDown)
+void BurstCouponLookAndFeel::drawButtonBackground (Graphics& g, Button& button, const Colour& /*backgroundColour*/, bool isMouseOverButton, bool isButtonDown)
 {
 	const Colour mainColour(button.findColour(button.getToggleState() ? TextButton::buttonOnColourId : TextButton::buttonColourId));
 	Colour baseColour(mainColour.withMultipliedSaturation(button.hasKeyboardFocus(true) ? 1.3f : 0.9f).withMultipliedAlpha (button.isEnabled() ? 0.9f : 0.5f));
@@ -322,7 +322,7 @@ void CloudBurstLookAndFeel::drawButtonBackground (Graphics& g, Button& button, c
     }
 }
 
-void CloudBurstLookAndFeel::drawTickBox(Graphics& g, Component& component,
+void BurstCouponLookAndFeel::drawTickBox(Graphics& g, Component& component,
                     float x, float y, float w, float h,
                     bool ticked,
                     bool /*isEnabled*/,
@@ -344,7 +344,7 @@ void CloudBurstLookAndFeel::drawTickBox(Graphics& g, Component& component,
     }
 }
 
-void CloudBurstLookAndFeel::drawLinearSliderThumb (Graphics& g, int x, int y, int width, int height,
+void BurstCouponLookAndFeel::drawLinearSliderThumb (Graphics& g, int x, int y, int width, int height,
                             float sliderPos, float minSliderPos, float maxSliderPos,
                             const Slider::SliderStyle style, Slider& slider)
 {
@@ -384,7 +384,7 @@ void CloudBurstLookAndFeel::drawLinearSliderThumb (Graphics& g, int x, int y, in
     }
 }
 
-void CloudBurstLookAndFeel::drawLinearSlider (Graphics& g, int x, int y, int width, int height,
+void BurstCouponLookAndFeel::drawLinearSlider (Graphics& g, int x, int y, int width, int height,
                         float sliderPos, float minSliderPos, float maxSliderPos,
                         const Slider::SliderStyle style, Slider& slider)
 {
@@ -419,7 +419,7 @@ void CloudBurstLookAndFeel::drawLinearSlider (Graphics& g, int x, int y, int wid
     }
 }
 
-void CloudBurstLookAndFeel::drawLinearSliderBackground (Graphics& g, int x, int y, int width, int height,
+void BurstCouponLookAndFeel::drawLinearSliderBackground (Graphics& g, int x, int y, int width, int height,
                                     float /*sliderPos*/,
                                     float /*minSliderPos*/,
                                     float /*maxSliderPos*/,
@@ -454,7 +454,7 @@ void CloudBurstLookAndFeel::drawLinearSliderBackground (Graphics& g, int x, int 
     g.fillPath (off);
 }
 
-void CloudBurstLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos,
+void BurstCouponLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos,
                         float rotaryStartAngle, float rotaryEndAngle, Slider& slider)
 {
     const float radius = jmin (width / 2, height / 2) - 2.0f;
@@ -486,7 +486,7 @@ void CloudBurstLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int wid
 }
 
 //==============================================================================
-void CloudBurstLookAndFeel::drawTableHeaderBackground (Graphics& g, TableHeaderComponent& header)
+void BurstCouponLookAndFeel::drawTableHeaderBackground (Graphics& g, TableHeaderComponent& header)
 {
 	g.fillAll (Colours::white);
 	juce::Rectangle<int> area(header.getLocalBounds());
@@ -502,7 +502,7 @@ void CloudBurstLookAndFeel::drawTableHeaderBackground (Graphics& g, TableHeaderC
 		g.fillRect (header.getColumnPosition (i).removeFromRight (1));
 }
 
-void CloudBurstLookAndFeel::drawTableHeaderColumn (Graphics& g, const String& columnName, int /*columnId*/,
+void BurstCouponLookAndFeel::drawTableHeaderColumn (Graphics& g, const String& columnName, int /*columnId*/,
 											int width, int height, bool isMouseOver, bool isMouseDown,
 											int columnFlags)
 {
@@ -530,7 +530,7 @@ void CloudBurstLookAndFeel::drawTableHeaderColumn (Graphics& g, const String& co
 	g.drawFittedText (columnName, area, Justification::centredLeft, 1);
 }
 
-void CloudBurstLookAndFeel::fillTextEditorBackground(Graphics &g, int width, int height, TextEditor &textEditor)
+void BurstCouponLookAndFeel::fillTextEditorBackground(Graphics &g, int width, int height, TextEditor &textEditor)
 {
 	g.fillAll(textEditor.findColour(TextEditor::backgroundColourId).darker(textEditor.isEnabled() ? 0.f : 0.05f));
 	g.setColour(textEditor.findColour (TextEditor::shadowColourId).withMultipliedAlpha(textEditor.isEnabled() ? 1.0f : 0.7f));
@@ -548,7 +548,7 @@ void CloudBurstLookAndFeel::fillTextEditorBackground(Graphics &g, int width, int
 	}
 }
 
-void CloudBurstLookAndFeel::drawAlertBox(Graphics& g, AlertWindow& alert, const Rectangle<int>& textArea, TextLayout& textLayout)
+void BurstCouponLookAndFeel::drawAlertBox(Graphics& g, AlertWindow& alert, const Rectangle<int>& textArea, TextLayout& textLayout)
 {
 	g.fillAll(alert.findColour(AlertWindow::backgroundColourId));
 
@@ -614,7 +614,7 @@ void CloudBurstLookAndFeel::drawAlertBox(Graphics& g, AlertWindow& alert, const 
 	g.drawRect(0, 0, alert.getWidth(), alert.getHeight());
 }
 
-void CloudBurstLookAndFeel::drawProgressBardrawProgressBar(Graphics& g, ProgressBar& progressBar,
+void BurstCouponLookAndFeel::drawProgressBardrawProgressBar(Graphics& g, ProgressBar& progressBar,
 	int width, int height,
 	double progress, const String& textToShow)
 {

@@ -2,7 +2,7 @@
 #define CBLOOKANDFEEL_H_INCLUDED
 
 /*
-CloudBurst DAPP
+BurstCoupon DAPP
 Copyright (C) 2018  CurbShifter
 
 This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "JuceHeader.h"
 
-struct CloudBurstLookAndFeel    : public LookAndFeel_V3
+struct BurstCouponLookAndFeel    : public LookAndFeel_V3
 {
 	void Init();
 

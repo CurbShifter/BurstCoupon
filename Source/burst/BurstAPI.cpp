@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "BurstAPI.h"
 #include <boost/crc.hpp>
 
+#include "crypto\blowfish.h"
 
 BurstAPI::BurstAPI(String hostUrl) : host(hostUrl)
 {
@@ -184,41 +185,65 @@ var BurstAPI::Sign(String unsignedTransactionBytesStr)
 	return String::empty;
 }
 
-String BurstAPI::RedeemCoupon(String couponHex, String password)
-{
-	MemoryBlock coupondataDecypted;
-	coupondataDecypted.loadFromHexString(couponHex);
-	BlowFish blowFishDecrypt(password.toUTF8(), (int)password.getNumBytesAsUTF8());
-	blowFishDecrypt.decrypt(coupondataDecypted);
+String BurstAPI::CreateCoupon(String recipient, String amountNQT, String feeNQT, String deadlineMinutes, String password)
+{	
+	MemoryBlock	pwBin(password.toRawUTF8(), password.getNumBytesAsUTF8());
+	String shaPwHex = SHA256(pwBin).toHexString().removeCharacters(" ");
+	//String shaPwHexHex = String::toHexString(shaPwHex.toRawUTF8(), shaPwHex.getNumBytesAsUTF8(), 0);
+	BLOWFISH bf(shaPwHex.toStdString());
 
-	MemoryBlock pubKey(32, true);
-	MemoryBlock data(coupondataDecypted.getSize() - 32, true);
-	coupondataDecypted.copyTo(pubKey.getData(), coupondataDecypted.getSize() - 32, 32);	
-	coupondataDecypted.copyTo(data.getData(), 0, coupondataDecypted.getSize() - 32);
+	String txSignedHex = SendMoney(recipient, amountNQT, feeNQT, deadlineMinutes, false);
+	String base64output;
+	if (txSignedHex.isNotEmpty())
+	{
+		int length = txSignedHex.getNumBytesAsUTF8();
+		byte* data = new byte[length];
+		memcpy(data, txSignedHex.toRawUTF8(), length);
 
-	var result = Broadcast(String::toHexString(data.getData(), data.getSize()).removeCharacters(" "));
-	const String transactionID = result["transaction"];
-	return transactionID;
+		int newlength = 0;
+		byte *encBytes = bf.Encrypt_CBC(data, length, &newlength);
+		base64output = toBase64Encoding(encBytes, newlength);
+		delete[] encBytes;
+	}
+	return base64output;
 }
 
-bool BurstAPI::VerifyCoupon(String couponHex, String password)
+String BurstAPI::RedeemCoupon(String couponCode, String password)
 {
-	MemoryBlock coupondataDecypted;
-	coupondataDecypted.loadFromHexString(couponHex);
-	BlowFish blowFishDecrypt(password.toUTF8(), (int)password.getNumBytesAsUTF8());
-	blowFishDecrypt.decrypt(coupondataDecypted);
-	
-	MemoryBlock pubKey(32, true);
-	coupondataDecypted.copyTo(pubKey.getData(), coupondataDecypted.getSize() - 32, 32);
+	String transactionID;
 
-	MemoryBlock signature(64, true);
-	coupondataDecypted.copyTo(signature.getData(), 32 * 3, 64);
-	
-	MemoryBlock data(coupondataDecypted.getSize() - 32, true);
-	coupondataDecypted.copyTo(data.getData(), 0, coupondataDecypted.getSize() - 32);
-	data.setBitRange(8 * (32 * 3), (8 * 64), 0);
+	MemoryBlock	pwBin(password.toRawUTF8(), password.getNumBytesAsUTF8());
+	String shaPwHex = SHA256(pwBin).toHexString().removeCharacters(" ");
+	BLOWFISH bf(shaPwHex.toStdString());
 
-	return crypto.verify(signature, pubKey, data);
+	MemoryBlock	couponCodeBin = fromBase64EncodingToMB(couponCode.toStdString());
+	int length = couponCodeBin.getSize();
+	byte* data = new byte[length];
+	memcpy(data, couponCodeBin.getData(), length);
+
+	int newlength = 0;
+	byte *decBytes = bf.Decrypt_CBC(data, length, &newlength);
+
+	if (newlength == 2 * 176)
+	{
+		bool invalidChar = false;
+		for (int i = 0; i < newlength && !invalidChar; i++)
+		{
+			invalidChar = invalidChar ? true : decBytes[i] < 48 || (decBytes[i] > 57 && decBytes[i] < 65) || (decBytes[i] > 70 && decBytes[i] < 97) || decBytes[i] > 102;
+		}
+		if (!invalidChar)
+		{
+			String coupondataDecypted((const char*)decBytes, newlength);
+			//var result = Broadcast(String::toHexString(coupondataDecypted.getData(), coupondataDecypted.getSize()).removeCharacters(" "));
+			var result = Broadcast(coupondataDecypted);
+			transactionID = result["transaction"];
+		}
+	}
+
+	delete[] data;
+	delete[] decBytes;
+
+	return transactionID;
 }
 
 var BurstAPI::Broadcast(String transactionBytesHex)
@@ -228,7 +253,6 @@ var BurstAPI::Broadcast(String transactionBytesHex)
 		// send the signed transaction, POST only.
 		URL url(host + "burst");
 		String post("requestType=broadcastTransaction" + (transactionBytesHex.isNotEmpty() ? "&transactionBytes=" + transactionBytesHex : ""));
-			// + (transactionJSON["senderPublicKey"].toString().isNotEmpty() ? "&transactionJSON=" + JSON::toString(transactionJSON, true).removeCharacters(" ") : ""));
 		
 		URL postURL = url.withPOSTData(MemoryBlock(post.toUTF8(), post.getNumBytesAsUTF8()));
 		String json = postURL.readEntireTextStream(true);
@@ -686,7 +710,138 @@ BurstAPI::Balance BurstAPI::GetBalance(var jsonStructure)
 	return bal;
 }
 
+static const std::string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+"abcdefghijklmnopqrstuvwxyz"
+"0123456789+/";
 
+static inline bool is_base64(unsigned char c) {
+	return (isalnum(c) || (c == '+') || (c == '/'));
+}
+
+std::string BurstAPI::toBase64Encoding(unsigned char const* bytes_to_encode, unsigned int in_len)
+{
+	std::string ret;
+	int i = 0;
+	int j = 0;
+	unsigned char char_array_3[3];
+	unsigned char char_array_4[4];
+
+	while (in_len--) {
+		char_array_3[i++] = *(bytes_to_encode++);
+		if (i == 3) {
+			char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;
+			char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
+			char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
+			char_array_4[3] = char_array_3[2] & 0x3f;
+
+			for (i = 0; (i <4); i++)
+				ret += base64_chars[char_array_4[i]];
+			i = 0;
+		}
+	}
+
+	if (i)
+	{
+		for (j = i; j < 3; j++)
+			char_array_3[j] = '\0';
+
+		char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;
+		char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
+		char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
+		char_array_4[3] = char_array_3[2] & 0x3f;
+
+		for (j = 0; (j < i + 1); j++)
+			ret += base64_chars[char_array_4[j]];
+
+		while ((i++ < 3))
+			ret += '=';
+	}
+
+	return ret;
+}
+
+juce::MemoryBlock BurstAPI::fromBase64EncodingToMB(std::string const& encoded_string)
+{
+	size_t in_len = encoded_string.size();
+	int i = 0;
+	int j = 0;
+	int in_ = 0;
+	unsigned char char_array_4[4], char_array_3[3];
+	juce::MemoryBlock ret;
+
+	while (in_len-- && (encoded_string[in_] != '=') && is_base64(encoded_string[in_])) {
+		char_array_4[i++] = encoded_string[in_]; in_++;
+		if (i == 4) {
+			for (i = 0; i <4; i++)
+				char_array_4[i] = (unsigned char)base64_chars.find(char_array_4[i]);
+
+			char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
+			char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
+			char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
+
+			for (i = 0; (i < 3); i++)
+				ret.append(&char_array_3[i], sizeof(char));
+			i = 0;
+		}
+	}
+
+	if (i) {
+		for (j = i; j <4; j++)
+			char_array_4[j] = 0;
+
+		for (j = 0; j <4; j++)
+			char_array_4[j] = (unsigned char)base64_chars.find(char_array_4[j]);
+
+		char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
+		char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
+		char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
+
+		for (j = 0; (j < i - 1); j++)// ret += char_array_3[j];
+			ret.append(&char_array_3[j], sizeof(char));
+	}
+	return ret;
+}
+
+std::string BurstAPI::fromBase64Encoding(std::string const& encoded_string)
+{
+	size_t in_len = encoded_string.size();
+	int i = 0;
+	int j = 0;
+	int in_ = 0;
+	unsigned char char_array_4[4], char_array_3[3];
+	std::string ret;
+
+	while (in_len-- && (encoded_string[in_] != '=') && is_base64(encoded_string[in_])) {
+		char_array_4[i++] = encoded_string[in_]; in_++;
+		if (i == 4) {
+			for (i = 0; i <4; i++)
+				char_array_4[i] = (unsigned char)base64_chars.find(char_array_4[i]);
+
+			char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
+			char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
+			char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
+
+			for (i = 0; (i < 3); i++)
+				ret += char_array_3[i];
+			i = 0;
+		}
+	}
+
+	if (i) {
+		for (j = i; j <4; j++)
+			char_array_4[j] = 0;
+
+		for (j = 0; j <4; j++)
+			char_array_4[j] = (unsigned char)base64_chars.find(char_array_4[j]);
+
+		char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
+		char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
+		char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
+
+		for (j = 0; (j < i - 1); j++) ret += char_array_3[j];
+	}
+	return ret;
+}
 /*
 
 MemoryBlock BurstAPI::TestAccountTransactions(StringArray txids, Array<StringArray> recipientsArray)
