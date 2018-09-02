@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -15,7 +14,7 @@
     <ProjectGuid>{6E91B0A8-DE8C-383E-43F3-611CDAAD22CF}</ProjectGuid>
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
@@ -27,11 +26,10 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
-  <ImportGroup Label="ExtensionSettings"/>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')"
-            Label="LocalAppDataPlatform"/>
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <PlatformToolset>v120</PlatformToolset>
@@ -52,7 +50,7 @@
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>Win32</TargetEnvironment>
-      <HeaderFileName/>
+      <HeaderFileName />
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -61,7 +59,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCER_VS2013_78A5020=1;JUCE_APP_VERSION=1.0.0;JUCE_APP_VERSION_HEX=0x10000;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <PrecompiledHeader/>
+      <PrecompiledHeader />
       <AssemblerListingLocation>$(IntDir)\</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)\</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)\</ProgramDataBaseFileName>
@@ -89,7 +87,7 @@
       <OutputFile>$(IntDir)\BurstCoupon.bsc</OutputFile>
     </Bscmake>
     <PreBuildEvent>
-      <Command>revision-update.bat &quot;$(ProjectDir)..\..\&quot;</Command>
+      <Command>revision-update.bat "$(ProjectDir)..\..\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -98,7 +96,7 @@
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>Win32</TargetEnvironment>
-      <HeaderFileName/>
+      <HeaderFileName />
     </Midl>
     <ClCompile>
       <Optimization>Full</Optimization>
@@ -106,7 +104,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2013_78A5020=1;JUCE_APP_VERSION=1.0.0;JUCE_APP_VERSION_HEX=0x10000;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <PrecompiledHeader/>
+      <PrecompiledHeader />
       <AssemblerListingLocation>$(IntDir)\</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)\</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)\</ProgramDataBaseFileName>
@@ -135,54 +133,56 @@
       <OutputFile>$(IntDir)\BurstCoupon.bsc</OutputFile>
     </Bscmake>
     <PreBuildEvent>
-      <Command>revision-update.bat &quot;$(ProjectDir)..\..\&quot;</Command>
+      <Command>revision-update.bat "$(ProjectDir)..\..\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\burst\crypto\Crytpo.cpp"/>
-    <ClCompile Include="..\..\Source\burst\crypto\curve25519_i64.c"/>
-    <ClCompile Include="..\..\Source\burst\crypto\sha256.cpp"/>
-    <ClCompile Include="..\..\Source\burst\BurstAPI.cpp"/>
-    <ClCompile Include="..\..\Source\InterfaceComponent.cpp"/>
-    <ClCompile Include="..\..\Source\Logger.cpp"/>
-    <ClCompile Include="..\..\Source\LookAndFeel.cpp"/>
-    <ClCompile Include="..\..\Source\Main.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\juce_audio_basics.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\juce_audio_devices.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\juce_audio_formats.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\juce_audio_processors.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\juce_core.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\juce_cryptography.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\juce_data_structures.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\juce_events.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\juce_graphics.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\juce_gui_basics.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\juce_gui_extra.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\juce_opengl.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\juce_video.cpp"/>
+    <ClCompile Include="..\..\Source\burst\crypto\blowfish.cpp" />
+    <ClCompile Include="..\..\Source\burst\crypto\Crytpo.cpp" />
+    <ClCompile Include="..\..\Source\burst\crypto\curve25519_i64.c" />
+    <ClCompile Include="..\..\Source\burst\crypto\sha256.cpp" />
+    <ClCompile Include="..\..\Source\burst\BurstAPI.cpp" />
+    <ClCompile Include="..\..\Source\InterfaceComponent.cpp" />
+    <ClCompile Include="..\..\Source\Logger.cpp" />
+    <ClCompile Include="..\..\Source\LookAndFeel.cpp" />
+    <ClCompile Include="..\..\Source\Main.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\juce_audio_basics.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\juce_audio_devices.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\juce_audio_formats.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\juce_audio_processors.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\juce_core.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\juce_cryptography.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\juce_data_structures.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\juce_events.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\juce_graphics.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\juce_gui_basics.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\juce_gui_extra.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\juce_opengl.cpp" />
+    <ClCompile Include="..\..\JuceLibraryCode\juce_video.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\burst\crypto\Crypto.hpp"/>
-    <ClInclude Include="..\..\Source\burst\crypto\curve25519_i64.h"/>
-    <ClInclude Include="..\..\Source\burst\crypto\sha256.h"/>
-    <ClInclude Include="..\..\Source\burst\BurstAPI.h"/>
-    <ClInclude Include="..\..\Source\InterfaceComponent.h"/>
-    <ClInclude Include="..\..\Source\Logger.h"/>
-    <ClInclude Include="..\..\Source\LookAndFeel.h"/>
-    <ClInclude Include="..\..\Source\VersionTemplate.h"/>
-    <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h"/>
-    <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h"/>
-    <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
+    <ClInclude Include="..\..\Source\burst\crypto\blowfish.h" />
+    <ClInclude Include="..\..\Source\burst\crypto\Crypto.hpp" />
+    <ClInclude Include="..\..\Source\burst\crypto\curve25519_i64.h" />
+    <ClInclude Include="..\..\Source\burst\crypto\sha256.h" />
+    <ClInclude Include="..\..\Source\burst\BurstAPI.h" />
+    <ClInclude Include="..\..\Source\InterfaceComponent.h" />
+    <ClInclude Include="..\..\Source\Logger.h" />
+    <ClInclude Include="..\..\Source\LookAndFeel.h" />
+    <ClInclude Include="..\..\Source\VersionTemplate.h" />
+    <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h" />
+    <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h" />
+    <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Source\img\burst-coupon-icon.png"/>
-    <None Include="..\..\Source\NotoSans-Regular.ttf"/>
-    <None Include=".\icon.ico"/>
+    <None Include="..\..\Source\img\burst-coupon-icon.png" />
+    <None Include="..\..\Source\NotoSans-Regular.ttf" />
+    <None Include=".\icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include=".\resources.rc"/>
+    <ResourceCompile Include=".\resources.rc" />
   </ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
-  <ImportGroup Label="ExtensionTargets"/>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
 </Project>

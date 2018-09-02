@@ -72,6 +72,7 @@ public:
 	var Broadcast(String unsignedTransactionBytesStr);
 
 	String RedeemCoupon(String couponHex, String password);
+	bool ValidateCoupon(String couponCode, String password);
 	String CreateCoupon(String recipient, String amountNQT, String feeNQT, String deadlineMinutes, String password);
 
 	var longConvert(String id);
@@ -86,7 +87,6 @@ public:
 	//	MemoryBlock TestAccountTransactions(StringArray txids, Array<StringArray> attachmentDatas);
 	//	void TestTransaction();
 
-	// ADDED CHATBURST
 	var GetUnconfirmedTransactions();
 	var GetUnconfirmedTransactionsIds();
 

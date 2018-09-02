@@ -201,7 +201,15 @@ String BurstAPI::CreateCoupon(String recipient, String amountNQT, String feeNQT,
 
 		int newlength = 0;
 		byte *encBytes = bf.Encrypt_CBC(data, length, &newlength);
+		
 		base64output = toBase64Encoding(encBytes, newlength);
+		
+		if (!ValidateCoupon(base64output, password))
+		{ // erase if code is not valid
+			base64output.clear();
+		}
+
+		//delete[] decBytes;
 		delete[] encBytes;
 	}
 	return base64output;
@@ -223,26 +231,58 @@ String BurstAPI::RedeemCoupon(String couponCode, String password)
 	int newlength = 0;
 	byte *decBytes = bf.Decrypt_CBC(data, length, &newlength);
 
-	if (newlength == 2 * 176)
+	bool invalidChar = false;
+	for (int i = 0; i < newlength && !invalidChar; i++)
 	{
-		bool invalidChar = false;
-		for (int i = 0; i < newlength && !invalidChar; i++)
-		{
-			invalidChar = invalidChar ? true : decBytes[i] < 48 || (decBytes[i] > 57 && decBytes[i] < 65) || (decBytes[i] > 70 && decBytes[i] < 97) || decBytes[i] > 102;
-		}
-		if (!invalidChar)
-		{
-			String coupondataDecypted((const char*)decBytes, newlength);
-			//var result = Broadcast(String::toHexString(coupondataDecypted.getData(), coupondataDecypted.getSize()).removeCharacters(" "));
-			var result = Broadcast(coupondataDecypted);
-			transactionID = result["transaction"];
-		}
+		invalidChar = invalidChar ? true : decBytes[i] < 48 || (decBytes[i] > 57 && decBytes[i] < 65) || (decBytes[i] > 70 && decBytes[i] < 97) || decBytes[i] > 102;
+	}
+	if (!invalidChar)
+	{
+		String coupondataDecypted((const char*)decBytes, newlength);
+		//var result = Broadcast(String::toHexString(coupondataDecypted.getData(), coupondataDecypted.getSize()).removeCharacters(" "));
+		var result = Broadcast(coupondataDecypted);
+		transactionID = result["transaction"];
 	}
 
 	delete[] data;
 	delete[] decBytes;
 
 	return transactionID;
+}
+
+bool BurstAPI::ValidateCoupon(String couponCode, String password)
+{
+	String transactionID;
+
+	MemoryBlock	pwBin(password.toRawUTF8(), password.getNumBytesAsUTF8());
+	String shaPwHex = SHA256(pwBin).toHexString().removeCharacters(" ");
+	BLOWFISH bf(shaPwHex.toStdString());
+	
+	MemoryBlock	couponCodeBin = fromBase64EncodingToMB(couponCode.toStdString());
+	int length = couponCodeBin.getSize();
+	byte* data = new byte[length];
+	memcpy(data, couponCodeBin.getData(), length);
+
+	int newlength = 0;
+	byte *decBytes = bf.Decrypt_CBC(data, length, &newlength);
+
+	bool success = false;
+
+	bool invalidChar = false;
+	for (int i = 0; i < newlength && !invalidChar; i++)
+	{ // check the data before we try to make a valid string. only expecting ascii hex-chars
+		invalidChar = invalidChar ? true : decBytes[i] < 48 || (decBytes[i] > 57 && decBytes[i] < 65) || (decBytes[i] > 70 && decBytes[i] < 97) || decBytes[i] > 102;
+	}
+	if (!invalidChar)
+	{
+		String coupondataDecypted((const char*)decBytes, newlength);
+		success = coupondataDecypted.isNotEmpty() && coupondataDecypted.containsOnly("ABCDEFabcdef0123456789");
+	}
+
+	delete[] data;
+	delete[] decBytes;
+
+	return success;
 }
 
 var BurstAPI::Broadcast(String transactionBytesHex)

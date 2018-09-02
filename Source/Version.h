@@ -2,10 +2,10 @@
 #ifndef __SubWCRev__
 #define __SubWCRev__
 
-#define SVNRevisionN 8
-#define SVNRevision "8"
+#define SVNRevisionN 14
+#define SVNRevision "14"
 #define SVNModified "Modified"
-#define SVNDate     "2018/09/01 22:46:20"
+#define SVNDate     "2018/09/02 04:49:38"
 #define SVNRange    "WCRANGE$"
 #define SVNMixed    "Mixed revision"
 #define SVNURL      "https://github.com/CurbShifter/BurstCoupon.git/trunk"

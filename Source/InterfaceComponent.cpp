@@ -259,6 +259,7 @@ InterfaceComponent::InterfaceComponent ()
 
     //[UserPreSize]
 	serverComboBox->setEditableText(true);
+	recipientEditor->addListener(this);
 	passPhraseTextEditor->addListener(this);
     //[/UserPreSize]
 
@@ -270,7 +271,6 @@ InterfaceComponent::InterfaceComponent ()
 	//deadlineSlider->setRange(1, 32767, 1);
 	walletLabel5->setText("Claim password", dontSendNotification);
 	walletLabel10->setText("Password", dontSendNotification);
-	recipientEditor->setText("", dontSendNotification);
 
 	versionLabel->setText("v1." SVNRevision, dontSendNotification);
 
@@ -286,6 +286,8 @@ InterfaceComponent::InterfaceComponent ()
 	if (server.isEmpty()) server = "http://127.0.0.1:8125/";
 	serverComboBox->setText(server, dontSendNotification);
 
+	recipientEditor->setText(Decrypt(GetAppValue("recipient")), dontSendNotification);
+
 	passPhraseTextEditor->setPasswordCharacter(0x2022);
 	passPhraseTextEditor->setText(Decrypt(GetAppValue("passPhraseEnc")), dontSendNotification);
 	passPhraseTextEditor->addListener(this);
@@ -294,7 +296,7 @@ InterfaceComponent::InterfaceComponent ()
 	recipientEditor->setTextToShowWhenEmpty("BURST-XXXX-XXXX-XXXX-XXXXX", Colours::lightgrey);
 	recipientEditor->setInputRestrictions(27, "0123456789-abcdefghjklmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ"); // PREFIX -XXXX-XXXX-XXXX-XXXXX // "1234567890"  including 0 and 1 because numerical option. and O because of CLOUD prefix
 
-	couponCodeTextEditor->setInputRestrictions(0, "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/");
+	couponCodeTextEditor->setInputRestrictions(0, "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/=");
 
 	burstAPI.SetHost(server);
 	burstAPI.SetSecretPhrase(passPhraseTextEditor->getText());
@@ -498,7 +500,7 @@ void InterfaceComponent::buttonClicked (Button* buttonThatWasClicked)
 
 				file.appendText("Coupon code:\n");
 				file.appendText(couponDataEncryptedBase64);
-
+								
 				file.appendText("\n\nLink:\n");
 				file.appendText("https://curbshifter.github.io/BurstCoupon/?coupon=" + couponDataEncryptedBase64);
 
@@ -520,6 +522,9 @@ void InterfaceComponent::buttonClicked (Button* buttonThatWasClicked)
 				file.appendText("\n\n**********************************************************\nCoupon password:\n");
 				file.appendText(makePasswordTextEditor->getText());
 				file.appendText("\n**********************************************************\n");
+
+				couponCodeTextEditor->setText(couponDataEncryptedBase64, dontSendNotification);
+				passwordTextEditor->setText(makePasswordTextEditor->getText(), dontSendNotification);
 
 				NativeMessageBox::showMessageBox(AlertWindow::InfoIcon, ProjectInfo::projectName, "Coupon saved\n" + file.getFullPathName());
 			}
@@ -622,6 +627,15 @@ void InterfaceComponent::textEditorTextChanged(TextEditor &editor) //Called when
 
 		myReedSolomon = burstAPI.getReedSolomon();
 		myAccount = burstAPI.rsConvert(myReedSolomon)["account"].toString();
+	}
+	if (recipientEditor == &editor)
+	{
+		String txt = editor.getText().toUpperCase().trim();
+	/*	if (txt.isNotEmpty() && !txt.startsWith("BURST-"))
+			txt = "BURST-" + txt; TODO: make this more dummy proof*/
+
+		SetAppValue("recipient", Encrypt(txt));
+		editor.setText(txt, dontSendNotification);
 	}
 }
 
