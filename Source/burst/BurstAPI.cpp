@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "BurstAPI.h"
 #include <boost/crc.hpp>
 
-#include "crypto\blowfish.h"
+#include "crypto/blowfish.h"
 
 BurstAPI::BurstAPI(String hostUrl) : host(hostUrl)
 {
