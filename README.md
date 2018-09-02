@@ -4,24 +4,24 @@ Create and claim password protected coupons for the [Burstcoin blockchain](http:
 
 ![BurstCoupon](https://github.com/CurbShifter/BurstCoupon/blob/master/Source/img/burst-coupon.png)
 
-*[DRAFT - WORK IN PROGRESS]*
+*[DRAFT]*
 
 Concept
 -
-The Burstcoin API allows you to first create and then sign a transaction locally, which keeps your password safe. Usually after signing you would broadcast the transaction to enter it into the memory pool of the nodes, so it can be included on the blockchain. 
+With the Burstcoin API you can first create and then sign a transaction locally, which keeps your password safe. Then usually after signing you would broadcast the transaction immediately to enter it into the public memory pool of the nodes, so it can be included on the blockchain. 
 
-This coupon model delays the transaction broadcasting by encrypting the signed transaction bytes with a password. The recipient of the coupon will need the arbitrary chosen password to broadcast the transaction that is within it. 
+This coupon model delays the transaction broadcast by encrypting the signed transaction bytes with a password. The recipient of the coupon will need the arbitrary chosen password to broadcast the transaction that is within it. The transaction now has a controllable lock that can be handled by a another person.
 
 
 Coupons expire
 -
-A coupon will always expire and becomes invalid. Which means the coupon creator can leverage the transaction through the password and the transaction deadline. The current maximum accepted deadline for a transaction is 24 hours. Which means the coupon can only be created and be valid for max 1440 minutes. 
+Any coupon will expire and loses its proposed value. Which means the coupon creator can leverage the transaction through the password and the transaction deadline. The current maximum accepted deadline for a transaction is 24 hours. Which means the coupon can only be valid for max 1440 minutes from the moment it is created. Coupon deadlines any lower than 30 minutes would not be sensible considering network traffic and timely inclusion in a block.
 
-When the coupon expires without a claim, then no funds are affected it's like the transaction never existed.
+When the coupon expires without a claim/broadcast, no funds are affected. It's like the transaction never existed. No double spending is possible either. The memory pool would be aware of the signature and will return the existing transaction reference.
 
 Usage
 -
-To create a coupon you need the dApp. Build it from source or [download it here](https://github.com/CurbShifter/BurstCoupon/releases "download"). Open the zip or dmg package and copy the dApp to a location of your choice. And double click to run it. 
+To create a coupon you need the dApp binary. Build it from source or [download it here](https://github.com/CurbShifter/BurstCoupon/releases "download"). Open the zip or dmg package and copy the dApp to a location of your choice. And double click to run it. 
 
 Select or enter the wallet server address in top of the interface. 
 
@@ -30,41 +30,42 @@ The create page lets you prepare a transaction as you would in a burst wallet.
 - Enter your secret pass phrase (it will only be used locally to sign the transaction).  
 - Enter the recipient BURST address. 
 - Select the value in BURST you are sending with the coupon. 
-- The deadline in minutes, the coupon will expire at this time!
-- The fee slot, recommended to keep this high enough to ensure the coupon is never rejected by the mempool. 
+- The deadline in minutes, the coupon will expire at this time after creation!
+- The fee slot, it is recommended to keep this high enough to ensure the coupon is not ignored by the miners. 
 - The last input box 'Claim password' will determine the password that needs to be entered to release the coupons transaction. Click make coupon and you will be asked for a location to save the coupon data.
 
 The claim page is very straight forward. Enter the coupon code and the password can click Claim coupon. You will be prompted on the success or failure. 
 
 Claim page
 -
-The recipient does not need the dApp binary to claim the coupon. Only the single static 
-[Burst Coupon Claim page](https://curbshifter.github.io/BurstCoupon/ "Burst Coupon Claim page") [source file](https://github.com/CurbShifter/BurstCoupon/blob/master/docs/index.html) is needed. The page only runs self contained client-side javascript to decrypt the coupon and post the transaction to a node.
+The recipient does not need the dApp binary to claim the coupon. Only the 
+[Burst Coupon Claim page](https://github.com/CurbShifter/BurstCoupon/blob/master/BurstCoupon-Claim.html "Burst Coupon Claim page") is needed. The single static html page runs only client-sided javascript to decrypt the coupon and post the transaction to a node.
 
-It is possible to give the recipient a link like this:
+With this page it is possible to give the recipient a link like this:
 
 https://curbshifter.github.io/BurstCoupon/?coupon=XXXX
 
-The 'XXXX' at the end should be replaced the with coupon code. Which saves the recipient the trouble of entering the code in the page. (Please feel free to host your own forked branded coupon claim page it should work the same).
-
-The page is static HTML/js and .
+The 'XXXX' at the end should be replaced the with coupon code. Which saves the recipient the trouble of entering the code in the page.
 
 Trust-less coupons from trusted issuers
 -
 The coupon recipient needs to trust the coupon issuer to give a valid coupon with the expected transaction. As the recipient is not able to see the contents of the transaction before decryption.
 
-When the coupon is claimed/broadcasted, the wallet of the coupon issuer needs to have enough balance to have the transaction accepted into the memory pool.
+When the coupon is claimed/broadcast, the wallet of the coupon issuer needs to have enough balance to have the transaction accepted into the memory pool.
 
 Possible applications
 -
 - Airdrops / Automated faucets using the password to prevent/discourage abuse.
+- Conditional triggering of smart contracts (via 3rd party without access to the wallet).
+- Increase anonymity of transaction broadcasts, by memory pool entry through other IP / nodes. Can be a model for (payed) coupon sharing and broadcasting.
 - Rewards for challenges (possibly for entry cost). For example based on puzzles or (online) detective work to retrieve the password. (generate site traffic!).
-- Triggering of smart contracts (via 3rd party).
-- Increase anonymity of transaction broadcasts, by mempool entry through other nodes. Can be a model for (payed) coupon sharing and broadcasting.
+- Scratch tickets, buy coupons with 'variable' value.
 
 Future
 -
-Adding more transaction types and arguments. Such as transaction references. This could allow escrows to be released by 1 party broadcasting both transactions (to sign the escrow and release the funds). Where the other party only has the option to relay the password without the need to access a node.
+- Adding other transaction types like multi-outs. 
+- Adding arguments such as transaction references. This could allow escrows to be released by 1 party broadcasting both transactions (to sign the escrow and release the funds). Where the other party only has the option to relay the password without the need to access a node.
+- A static html page to make coupons without the need of a dApp binary.
 
 Technical process
 -
@@ -98,7 +99,7 @@ The msvc2013 / xcode projects are included. You will need to download and includ
 
 Inquiries
 -
-Implementations as background service can be discussed. You can reach me through discord  [https://discord.gg/KsFf3jb](https://discord.gg/KsFf3jb "https://discord.gg/KsFf3jb") username: @CurbShifter#9411
+You can reach me through discord  [https://discord.gg/KsFf3jb](https://discord.gg/KsFf3jb "https://discord.gg/KsFf3jb") username: @CurbShifter#9411
 
 ----------
 
