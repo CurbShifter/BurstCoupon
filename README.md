@@ -1,10 +1,8 @@
 # Burst Coupon
 
-Create and claim password protected coupons for the [Burstcoin blockchain](http://burst-coin.org/).
+Create and claim password protected coupons as extension for the [Burstcoin blockchain](http://burst-coin.org/).
 
 ![BurstCoupon](https://github.com/CurbShifter/BurstCoupon/blob/master/Source/img/burst-coupon.png)
-
-*[DRAFT]*
 
 Concept
 -
@@ -27,6 +25,14 @@ Through this code / concept the following applications can be developed;
 - Increase anonymity of transaction broadcasts, by memory pool entry through other IP / nodes. Can be a model for (payed) coupon sharing and broadcasting.
 - Rewards for challenges (possibly for entry cost). For example based on puzzles or (online) detective work to retrieve the password. (generate site traffic!).
 - Scratch tickets, buy coupons with 'variable' value.
+
+Trusted creator
+-
+The coupon execution is trust-less. But one needs to trust the coupon issuer to give a valid coupon with the expected transaction. As the recipient is not able to validate the contents of the transaction before decryption.
+
+When the coupon is claimed/broadcast, the wallet of the coupon issuer needs to have enough balance to have the transaction accepted into the memory pool !
+
+----
 
 Usage of BurstCoupon
 -
@@ -55,21 +61,7 @@ https://curbshifter.github.io/BurstCoupon/?coupon=XXXX
 
 The 'XXXX' at the end should be replaced the with coupon code. Which saves the recipient the trouble of entering the code in the page. You may use the page/code to host your own branded page.
 
-Trusted creator
--
-The coupon execution is trust-less. But one needs to trust the coupon issuer to give a valid coupon with the expected transaction. As the recipient is not able to validate the contents of the transaction before decryption.
-
-When the coupon is claimed/broadcast, the wallet of the coupon issuer needs to have enough balance to have the transaction accepted into the memory pool !
-
-
-
-Future
--
-- Adding other transaction types like multi-outs. 
-- Adding arguments such as transaction references. This could allow escrows to be released by 1 party broadcasting both transactions (to sign the escrow and release the funds). Where the other party only has the option to relay the password without the need to access a node.
-- A static html page to make coupons without the need of a dApp binary.
-- Partial data encryption (only signature) to readout tx data to display details during the claim process
-
+----
 Basic process
 -
 Creating the coupon:
@@ -89,6 +81,12 @@ Claiming the coupon
 - only continue if the data is 176 bytes long and just contains hex characters.
 - Broadcast the tx bytes to the node.
 
+Future development
+-
+- Adding other transaction types like multi-outs. 
+- Adding arguments such as transaction references. This could allow escrows to be released by 1 party broadcasting both transactions (to sign the escrow and release the funds). Where the other party only has the option to relay the password without the need to access a node.
+- A static html page to make coupons removing the need of a dApp binary.
+- Partial data encryption (only signature) to readout tx data to display details during the claim process
 
 Building
 -
