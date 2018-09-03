@@ -305,7 +305,7 @@ function RedeemFunction() {
 		var postdata = {requestType: 'broadcastTransaction', transactionBytes: decrypted};
 		post(walletUrl + "burst", postdata, "post");
 		
-		resultText = 'The coupon has been send to the selected node !<p>A window with the raw transation details should have opened.<br>If any error occured then try again using another node.</p>';
+		resultText = 'The coupon has been send to the selected node !<p>A window with the raw transation details should have opened.<br>If any error occured then try again using another node. The coupon can be expired.</p>';
 		
 	}
 	document.getElementById("result_output").innerHTML = resultText;
