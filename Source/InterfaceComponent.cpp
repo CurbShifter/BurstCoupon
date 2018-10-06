@@ -20,6 +20,9 @@
 //[Headers] You can add your own extra header files here...
 #include "Logger.h"
 #include "Version.h"
+
+#include "BurstLib.c"
+#define STR_SIZE 2048
 //[/Headers]
 
 #include "InterfaceComponent.h"
@@ -298,11 +301,44 @@ InterfaceComponent::InterfaceComponent ()
 
 	couponCodeTextEditor->setInputRestrictions(0, "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/=");
 
-	burstAPI.SetHost(server);
-	burstAPI.SetSecretPhrase(passPhraseTextEditor->getText());
+	//File library_path(File::getCurrentWorkingDirectory());
+	File library_path(File::getSpecialLocation(File::hostApplicationPath).getParentDirectory());
 
-	myReedSolomon = burstAPI.getReedSolomon();
-	myAccount = burstAPI.GetAccountId()["account"].toString();
+    ToLog("DIR LIB: " + library_path.getFullPathName());
+    
+#if defined(_WIN64) || defined(_WIN32)
+	library_path = library_path.getChildFile("BurstLib.dll");
+#elif defined(__APPLE__)
+	library_path = library_path.getParentDirectory().getChildFile("Resources").getChildFile("BurstLib.dylib");
+#endif
+
+    bool libLoaded = false;
+    if (library_path.existsAsFile())
+    {
+        void *dll_handle = BurstLib_LoadDLL(library_path.getFullPathName().toRawUTF8(), &burstLib);// Call the library functions
+        if (!dll_handle || burstLib.GetHandle == nullptr)
+            ToLog("BurstLib library not found!");
+        else
+        {
+            apiHandle = burstLib.GetHandle();
+            if (apiHandle)
+            {
+                ToLog(("BurstLib version ") + burstLib.GetBurstLibVersionNumber(apiHandle));
+                libLoaded = true;
+            }
+            else ToLog("Failed to create API handle!");
+        }
+    }
+	if (!libLoaded)
+	{
+		NativeMessageBox::showMessageBox(AlertWindow::WarningIcon, ProjectInfo::projectName, "No BurstLib found, or it failed to load !\n" + library_path.getFullPathName());
+		juce::JUCEApplication::quit();
+	}
+	else
+	{
+		burstLib.SetNode(apiHandle, server.toRawUTF8(), server.getNumBytesAsUTF8());
+		burstLib.SetSecretPhrase(apiHandle, passPhraseTextEditor->getText().toRawUTF8(), passPhraseTextEditor->getText().getNumBytesAsUTF8());
+	}
 
 	deadlineSlider->setValue(1440.f, dontSendNotification);
 	feeSlider->setValue(1.f, dontSendNotification);
@@ -418,7 +454,7 @@ void InterfaceComponent::paint (Graphics& g)
 	g.setColour(Colours::black);
 	jassert(drawable1 != 0);
 	if (drawable1 != 0)
-		drawable1->drawWithin(g, Rectangle<float>(20, 18, 169, 68),
+		drawable1->drawWithin(g, juce::Rectangle<float>(20, 18, 169, 68),
 		RectanglePlacement::centred | RectanglePlacement::onlyReduceInSize, 1.000f);	
     //[/UserPaint]
 }
@@ -457,7 +493,7 @@ void InterfaceComponent::resized()
     claimButton->setBounds (300, 100, 300, 24);
     //[UserResized] Add your own custom resize handling here..
 	int yOffset = walletLabel10->getY() - walletLabel4->getY();
-	Rectangle<int> r = walletLabel10->getBounds().translated(0, -yOffset);
+	juce::Rectangle<int> r = walletLabel10->getBounds().translated(0, -yOffset);
 	walletLabel10->setBounds(r);
 	r = walletLabel11->getBounds().translated(0, -yOffset);
 	walletLabel11->setBounds(r);
@@ -487,16 +523,42 @@ void InterfaceComponent::buttonClicked (Button* buttonThatWasClicked)
 				file.deleteFile();
 
 			String recipient(recipientEditor->getText().trim());
-			String amountNQT((uint64)(100000000 * valueSlider->getValue()));
-			String feeNQT((uint64)(735000 * feeSlider->getValue()));
-			String deadlineMinutes(deadlineSlider->getValue());
 			String makePassword = makePasswordTextEditor->getText();
+			long long amountNQT = (100000000 * valueSlider->getValue());
+			long long feeNQT = (735000 * feeSlider->getValue());
+			long long deadlineMinutes = deadlineSlider->getValue();
 
-			String couponDataEncryptedBase64 = burstAPI.CreateCoupon(recipient, amountNQT, feeNQT, deadlineMinutes, makePassword);
+			char sendMoneyReturnVal[STR_SIZE];
+			int sendMoneyReturnSize = STR_SIZE;
+			burstLib.sendMoney(apiHandle, 
+				&sendMoneyReturnVal[0], sendMoneyReturnSize,
+				recipient.toRawUTF8(), recipient.getNumBytesAsUTF8(),
+				amountNQT,
+				feeNQT,
+				deadlineMinutes,
+				false);
+
+			char couponHEX[STR_SIZE];
+			int couponHEXSize = STR_SIZE;
+			burstLib.CreateCoupon(apiHandle,
+				&couponHEX[0], couponHEXSize,
+				&sendMoneyReturnVal[0], sendMoneyReturnSize,
+				makePassword.toRawUTF8(), makePassword.getNumBytesAsUTF8());
+
+			String couponDataEncryptedBase64(&couponHEX[0], couponHEXSize);
 			if (couponDataEncryptedBase64.isNotEmpty())
 			{
-				var accountInfo = burstAPI.GetAccountId();
-				String myAccountRS = accountInfo["accountRS"].toString();
+				char accountInfoVal[STR_SIZE];
+				int accountInfoSize = STR_SIZE;
+				burstLib.GetAccount(apiHandle,
+					&accountInfoVal[0], accountInfoSize);
+				const char *key = "accountRS";
+				char myAccountRS[STR_SIZE];
+				int myAccountRSSize = STR_SIZE;
+				burstLib.GetJSONvalue(apiHandle,
+					&myAccountRS[0], myAccountRSSize,
+					&accountInfoVal[0], accountInfoSize,
+					key, strlen("accountRS"));
 
 				file.appendText("Coupon code:\n");
 				file.appendText(couponDataEncryptedBase64);
@@ -508,23 +570,23 @@ void InterfaceComponent::buttonClicked (Button* buttonThatWasClicked)
 				file.appendText(Time(Time::currentTimeMillis() + (deadlineSlider->getValue() * 60 * 1000)).toString(true, true, false));
 
 				file.appendText("\n\nFrom: ");
-				file.appendText(myAccountRS);
+				file.appendText(String(&myAccountRS[0], myAccountRSSize));
 
 				file.appendText("\nTo: ");
-				file.appendText(recipient);
+				file.appendText(String(recipient));
 
 				file.appendText("\n\namountNQT:\n");
-				file.appendText(amountNQT);
+				file.appendText(String(amountNQT));
 
 				file.appendText("\n\nfeeNQT:\n");
-				file.appendText(feeNQT);
+				file.appendText(String(feeNQT));
 
 				file.appendText("\n\n**********************************************************\nCoupon password:\n");
 				file.appendText(makePasswordTextEditor->getText());
 				file.appendText("\n**********************************************************\n");
 
-				couponCodeTextEditor->setText(couponDataEncryptedBase64, dontSendNotification);
-				passwordTextEditor->setText(makePasswordTextEditor->getText(), dontSendNotification);
+				//couponCodeTextEditor->setText(couponDataEncryptedBase64, dontSendNotification);
+				//passwordTextEditor->setText(makePasswordTextEditor->getText(), dontSendNotification);
 
 				NativeMessageBox::showMessageBox(AlertWindow::InfoIcon, ProjectInfo::projectName, "Coupon saved\n" + file.getFullPathName());
 			}
@@ -548,9 +610,21 @@ void InterfaceComponent::buttonClicked (Button* buttonThatWasClicked)
 		String password = passwordTextEditor->getText();
 		String couponCode = couponCodeTextEditor->getText();
 
-		String txId = burstAPI.RedeemCoupon(couponCode, password);
-		if (txId.isNotEmpty())
-			NativeMessageBox::showMessageBox(AlertWindow::InfoIcon, ProjectInfo::projectName, "Coupon redeemed!\ntx ID " + txId);
+		char txId[STR_SIZE];
+		int txIdSize = STR_SIZE;
+		if (burstLib.RedeemCoupon(apiHandle,
+			&txId[0], txIdSize,
+			couponCode.toRawUTF8(), couponCode.getNumBytesAsUTF8(),
+			password.toRawUTF8(), password.getNumBytesAsUTF8()))
+		{
+
+		}
+
+
+		//String txId = burstLib.RedeemCoupon(couponCode, password);
+		//if (txId.isNotEmpty())
+		if (txIdSize > 0)
+			NativeMessageBox::showMessageBox(AlertWindow::InfoIcon, ProjectInfo::projectName, "Coupon redeemed!\ntx ID " + String(&txId[0], txIdSize));
 		else NativeMessageBox::showMessageBox(AlertWindow::WarningIcon, ProjectInfo::projectName, "Coupon or password is invalid!");
         //[/UserButtonCode_redeemButton]
     }
@@ -581,8 +655,8 @@ void InterfaceComponent::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
         //[UserComboBoxCode_serverComboBox] -- add your combo box handling code here..
 		String server = serverComboBox->getText();
 		SetAppValue("server", server);
-		burstAPI.SetHost(server);
-        //[/UserComboBoxCode_serverComboBox]
+		burstLib.SetNode(apiHandle, server.toRawUTF8(), server.getNumBytesAsUTF8());
+		//[/UserComboBoxCode_serverComboBox]
     }
 
     //[UsercomboBoxChanged_Post]
@@ -624,9 +698,6 @@ void InterfaceComponent::textEditorTextChanged(TextEditor &editor) //Called when
 		if (savePassPhraseToggleButton->getToggleState())
 			SetAppValue("passPhraseEnc", Encrypt(editor.getText()));
 		else SetAppValue("passPhraseEnc", "");
-
-		myReedSolomon = burstAPI.getReedSolomon();
-		myAccount = burstAPI.rsConvert(myReedSolomon)["account"].toString();
 	}
 	if (recipientEditor == &editor)
 	{
@@ -650,7 +721,7 @@ void InterfaceComponent::textEditorEscapeKeyPressed(TextEditor &/*editor*/) //Ca
 void InterfaceComponent::textEditorFocusLost(TextEditor &editor) //Called when the text editor loses focus.
 {
 	if (passPhraseTextEditor == &editor)
-		burstAPI.SetSecretPhrase(passPhraseTextEditor->getText());
+		burstLib.SetSecretPhrase(apiHandle, passPhraseTextEditor->getText().toRawUTF8(), passPhraseTextEditor->getText().getNumBytesAsUTF8());
 }
 
 String InterfaceComponent::GetAppValue(const String type)

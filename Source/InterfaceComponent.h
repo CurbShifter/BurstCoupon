@@ -22,8 +22,10 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "burst/BurstAPI.h"
 #include "LookAndFeel.h"
+
+#include "BurstLib.h"
+//typedef unsigned long long burstlibPtr;
 //[/Headers]
 
 
@@ -81,12 +83,13 @@ private:
     //[UserVariables]   -- You can add your own custom variables in this section.
 	void timerCallback();
 
-	BurstAPI burstAPI;
+	burstlibPtr apiHandle;
+	BurstLib_FunctionHandles burstLib;
 
 	void log(String message);
 	ScopedPointer<BurstCouponLookAndFeel> wizlaf;
-	String myAccount;
-	String myReedSolomon;
+	//String myAccount;
+	//String myReedSolomon;
 
 	int view;
     //[/UserVariables]

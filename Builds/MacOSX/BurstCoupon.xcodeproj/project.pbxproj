@@ -23,13 +23,11 @@
 
 /* Begin PBXBuildFile section */
 		01C3FA7E7EA63D3E82228788 /* juce_audio_formats.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6FFFEEE8C8614E414D132F9A /* juce_audio_formats.mm */; };
-		0395495BBA59E8A6993C97AE /* curve25519_i64.c in Sources */ = {isa = PBXBuildFile; fileRef = 78832D12343501D665BCA4CB /* curve25519_i64.c */; };
 		04F4A647C9C8815F2F531A44 /* juce_video.mm in Sources */ = {isa = PBXBuildFile; fileRef = E89578231A4F1CDE2FF829BD /* juce_video.mm */; };
 		0F513665214D8C3AA0099335 /* juce_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = C6CE8D909CAF4D2FD0CB849F /* juce_graphics.mm */; };
 		1B70A2BCBE4674859BD4BC35 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B83D2D17F8301AAD5CF7711 /* Accelerate.framework */; };
 		2023D4AD8EE7CF119759796E /* juce_core.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A505E6C018D339FE787A79A /* juce_core.mm */; };
 		3B6EFE8BD94B38DBC2F2110E /* juce_events.mm in Sources */ = {isa = PBXBuildFile; fileRef = C20D29293ACB1ADB71565000 /* juce_events.mm */; };
-		3BC2183961C8546AA5BDBAD3 /* Crytpo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6F732A27D45293D84A5916F /* Crytpo.cpp */; };
 		3C993F34ADAB89ED1878504A /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B14DC11966DF9FBCC581DEF4 /* IOKit.framework */; };
 		3F9B138113EBA8F2118FE32B /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1351541F7A646F1A589450F /* CoreAudio.framework */; };
 		41FF9BA7B0D50E703357A742 /* BinaryData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E5011BC91A4D089094E85C6 /* BinaryData.cpp */; };
@@ -45,7 +43,6 @@
 		9402CCDDE977F9C036B5162D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53541BA1930810B38912162D /* Carbon.framework */; };
 		9565FF5F152D25F3C24361DC /* juce_gui_extra.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD28E21CBA5C16F42F6D81F6 /* juce_gui_extra.mm */; };
 		965ED4C974B33DFF6C33EB27 /* InterfaceComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9728837C593183A23ED1008 /* InterfaceComponent.cpp */; };
-		98E60473DCDA7DE977BB3A10 /* BurstAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22F198A316ED9C8884BFEAE1 /* BurstAPI.cpp */; };
 		9935985C6A74F0C9F6D16BA7 /* juce_opengl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1E5446892B66D9C237ABC721 /* juce_opengl.mm */; };
 		A9302706C083070C0A091D65 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 485B9BBE00BDAC366CE64AC2 /* QTKit.framework */; };
 		B1074EA76E8AD8313E7E4A2B /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5A26A37502D0714AF2231 /* QuickTime.framework */; };
@@ -54,7 +51,6 @@
 		C9D08B20EF84F7F878E84449 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013C0112044DEEE09D915690 /* AudioToolbox.framework */; };
 		CA0854ED69CDEA362A1DE45F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9734E75EED3A343421F588C /* QuartzCore.framework */; };
 		D7E8B40C27E7493034C7C24D /* LookAndFeel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7416FB5964361A5F7C6E54AD /* LookAndFeel.cpp */; };
-		E1193489DB9355695585F902 /* sha256.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED408D1A613B34A15C0E3CDD /* sha256.cpp */; };
 		EFDBA873B3A2ADF9FAA9B824 /* RecentFilesMenuTemplate.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7CCC1C6BD09B2E2D9FD91554 /* RecentFilesMenuTemplate.nib */; };
 		FA8CDF56870BAFC0CFDC6F42 /* juce_data_structures.mm in Sources */ = {isa = PBXBuildFile; fileRef = 137749EDF06FE84EE4298AFC /* juce_data_structures.mm */; };
 		FD4BF5B87AEC07889249424E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D281550A2333C0C2CE5462 /* Cocoa.framework */; };
@@ -80,11 +76,9 @@
 		137749EDF06FE84EE4298AFC /* juce_data_structures.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_data_structures.mm; path = ../../JuceLibraryCode/juce_data_structures.mm; sourceTree = SOURCE_ROOT; };
 		1C29A53036FB75438319EEFF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		1E5446892B66D9C237ABC721 /* juce_opengl.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_opengl.mm; path = ../../JuceLibraryCode/juce_opengl.mm; sourceTree = SOURCE_ROOT; };
-		22F198A316ED9C8884BFEAE1 /* BurstAPI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BurstAPI.cpp; path = ../../Source/burst/BurstAPI.cpp; sourceTree = SOURCE_ROOT; };
 		24ED4894BE89A16D46B028AC /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		2C9C46FDF73C1907998EABA9 /* juce_cryptography.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_cryptography.mm; path = ../../JuceLibraryCode/juce_cryptography.mm; sourceTree = SOURCE_ROOT; };
 		2CDDE3513358C9B4F415BF41 /* BurstCoupon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BurstCoupon.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3117B64FDE8F79B77C6FF9E0 /* BurstAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BurstAPI.h; path = ../../Source/burst/BurstAPI.h; sourceTree = SOURCE_ROOT; };
 		485B9BBE00BDAC366CE64AC2 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		4B83D2D17F8301AAD5CF7711 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		53541BA1930810B38912162D /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
@@ -98,7 +92,6 @@
 		75B6134337BFD8B926DC3456 /* burst-coupon-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "burst-coupon-icon.png"; path = "../../Source/img/burst-coupon-icon.png"; sourceTree = SOURCE_ROOT; };
 		76D281550A2333C0C2CE5462 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7785B9BE7B283DE6F6A59AF9 /* LookAndFeel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LookAndFeel.h; path = ../../Source/LookAndFeel.h; sourceTree = SOURCE_ROOT; };
-		78832D12343501D665BCA4CB /* curve25519_i64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = curve25519_i64.c; path = ../../Source/burst/crypto/curve25519_i64.c; sourceTree = SOURCE_ROOT; };
 		7ABC9A14CC68837B2C0AE0F5 /* Info-App.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-App.plist"; sourceTree = SOURCE_ROOT; };
 		7CCC1C6BD09B2E2D9FD91554 /* RecentFilesMenuTemplate.nib */ = {isa = PBXFileReference; lastKnownFileType = file.nib; path = RecentFilesMenuTemplate.nib; sourceTree = SOURCE_ROOT; };
 		84F6C04A2FD37BE344042A17 /* AppConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = ../../JuceLibraryCode/AppConfig.h; sourceTree = SOURCE_ROOT; };
@@ -106,11 +99,7 @@
 		B1351541F7A646F1A589450F /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		B14DC11966DF9FBCC581DEF4 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B2741AE5E09B6F6018F22DA7 /* InterfaceComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InterfaceComponent.h; path = ../../Source/InterfaceComponent.h; sourceTree = SOURCE_ROOT; };
-		B2B8FB31A2AE441ADD233087 /* curve25519_i64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = curve25519_i64.h; path = ../../Source/burst/crypto/curve25519_i64.h; sourceTree = SOURCE_ROOT; };
-		B6F732A27D45293D84A5916F /* Crytpo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Crytpo.cpp; path = ../../Source/burst/crypto/Crytpo.cpp; sourceTree = SOURCE_ROOT; };
-		C1393C4F2C40F881AC0F102A /* Crypto.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Crypto.hpp; path = ../../Source/burst/crypto/Crypto.hpp; sourceTree = SOURCE_ROOT; };
 		C20D29293ACB1ADB71565000 /* juce_events.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_events.mm; path = ../../JuceLibraryCode/juce_events.mm; sourceTree = SOURCE_ROOT; };
-		C4217C4B5FD1DE4C580A41DD /* sha256.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sha256.h; path = ../../Source/burst/crypto/sha256.h; sourceTree = SOURCE_ROOT; };
 		C6CE8D909CAF4D2FD0CB849F /* juce_graphics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_graphics.mm; path = ../../JuceLibraryCode/juce_graphics.mm; sourceTree = SOURCE_ROOT; };
 		C9728837C593183A23ED1008 /* InterfaceComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InterfaceComponent.cpp; path = ../../Source/InterfaceComponent.cpp; sourceTree = SOURCE_ROOT; };
 		CD28E21CBA5C16F42F6D81F6 /* juce_gui_extra.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_gui_extra.mm; path = ../../JuceLibraryCode/juce_gui_extra.mm; sourceTree = SOURCE_ROOT; };
@@ -121,7 +110,6 @@
 		DB9A6A10ACD0081EAAB3267C /* juce_audio_devices.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_audio_devices.mm; path = ../../JuceLibraryCode/juce_audio_devices.mm; sourceTree = SOURCE_ROOT; };
 		E89578231A4F1CDE2FF829BD /* juce_video.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_video.mm; path = ../../JuceLibraryCode/juce_video.mm; sourceTree = SOURCE_ROOT; };
 		EB9C4C89AF2E793A684E9557 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; name = "NotoSans-Regular.ttf"; path = "../../Source/NotoSans-Regular.ttf"; sourceTree = SOURCE_ROOT; };
-		ED408D1A613B34A15C0E3CDD /* sha256.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sha256.cpp; path = ../../Source/burst/crypto/sha256.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,34 +163,10 @@
 			name = img;
 			sourceTree = "<group>";
 		};
-		6E38998314FE5CA92609C41C /* burst */ = {
-			isa = PBXGroup;
-			children = (
-				B3180388FE9AE173BB9005F7 /* crypto */,
-				22F198A316ED9C8884BFEAE1 /* BurstAPI.cpp */,
-				3117B64FDE8F79B77C6FF9E0 /* BurstAPI.h */,
-			);
-			name = burst;
-			sourceTree = "<group>";
-		};
-		B3180388FE9AE173BB9005F7 /* crypto */ = {
-			isa = PBXGroup;
-			children = (
-				C1393C4F2C40F881AC0F102A /* Crypto.hpp */,
-				B6F732A27D45293D84A5916F /* Crytpo.cpp */,
-				78832D12343501D665BCA4CB /* curve25519_i64.c */,
-				B2B8FB31A2AE441ADD233087 /* curve25519_i64.h */,
-				ED408D1A613B34A15C0E3CDD /* sha256.cpp */,
-				C4217C4B5FD1DE4C580A41DD /* sha256.h */,
-			);
-			name = crypto;
-			sourceTree = "<group>";
-		};
 		D1D1772CF7AA5DDE21083F46 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				3A6164F5B86825FEADEA2082 /* img */,
-				6E38998314FE5CA92609C41C /* burst */,
 				C9728837C593183A23ED1008 /* InterfaceComponent.cpp */,
 				B2741AE5E09B6F6018F22DA7 /* InterfaceComponent.h */,
 				8F5C1C35449F9CC70B4BD08F /* Logger.cpp */,
@@ -287,6 +251,7 @@
 				5A2E37BFD8741CBD1294B358 /* Resources */,
 				DDFCD689632CAF9A5E0AC18E /* Sources */,
 				D2E365822EA4EDC1E883B2C5 /* Frameworks */,
+				0A1F1E27215FF28C00E0FD1A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -363,6 +328,19 @@
 			shellPath = /bin/sh;
 			shellScript = "set -ex\n\n[ \"$ACTION\" = build ] || exit 0\n[ \"$BUILD_VARIANTS\" = \"normal\" ] || exit 0\n\nPRONAME=BurstCoupon\n\ndir=\"/Volumes/$PRONAME\"\ndmg=\"$OBJROOT/../$PRONAME.dmg\"\n\ndmgTemplate=\"$PROJECT_DIR/DMG-template/$PRONAME.sparseimage\"\ndmgTemplateTemp=\"$PROJECT_DIR/DMG-template/$PRONAME-temp.sparseimage\"\n\ndmgTemp=\"$CONFIGURATION_BUILD_DIR/../../$PROJECT_NAMETEMP.dmg\"\ndmgcontents=\"$CONFIGURATION_BUILD_DIR/../dmg-contents\"\n\nrm -f \"$dmgTemplateTemp\"\ncp -R \"$dmgTemplate\" \"$dmgTemplateTemp\"\n\ntheapp=\"$PROJECT_DIR/build/Release/$PRONAME.app\"\n#strip -x \"$theapp/Contents/MacOS/$PRONAME\"\n\nrm -f \"$dmg\"\n\nhdiutil mount \"$dmgTemplateTemp\"\n\ncp -R \"$theapp\" \"$dir\"\n\nln -s \"/Applications/\" \"$dir/Applications\"\n\nhdiutil detach \"$dir\"\n\nthedmgfile=\"/Users/Jorn/Desktop/$PRONAME.dmg\"\nrm -f $thedmgfile\nhdiutil convert \"$dmgTemplateTemp\" -format UDZO -o $thedmgfile\nhdiutil internet-enable -yes $thedmgfile\n\nrm -rf \"$dir\"\nrm -rf \"$dmgTemplateTemp\"\n";
 		};
+		0A1F1E27215FF28C00E0FD1A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mkdir -p $PROJECT_DIR/build/$CONFIGURATION/$CONTENTS_FOLDER_PATH/Resources\ncp /Users/Jorn/Documents/Code/Burst/BurstLib-master/Builds/MacOSX/build/Release/BurstLib.dylib $PROJECT_DIR/build/$CONFIGURATION/$CONTENTS_FOLDER_PATH/Resources";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -370,10 +348,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3BC2183961C8546AA5BDBAD3 /* Crytpo.cpp in Sources */,
-				0395495BBA59E8A6993C97AE /* curve25519_i64.c in Sources */,
-				E1193489DB9355695585F902 /* sha256.cpp in Sources */,
-				98E60473DCDA7DE977BB3A10 /* BurstAPI.cpp in Sources */,
 				965ED4C974B33DFF6C33EB27 /* InterfaceComponent.cpp in Sources */,
 				C8E2772A3E68955D51E9ECA6 /* Logger.cpp in Sources */,
 				D7E8B40C27E7493034C7C24D /* LookAndFeel.cpp in Sources */,
@@ -485,6 +459,7 @@
 					/Users/Jorn/Documents/Libs/JUCE_4.3.0/modules,
 					/Users/Jorn/Documents/Libs/boost_1_67_0,
 					"$(inherited)",
+					"../../../BurstLib-master/Source",
 				);
 				INFOPLIST_FILE = "Info-App.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -519,6 +494,7 @@
 					/Users/Jorn/Documents/Libs/JUCE_4.3.0/modules,
 					/Users/Jorn/Documents/Libs/boost_1_67_0,
 					"$(inherited)",
+					"../../../BurstLib-master/Source",
 				);
 				INFOPLIST_FILE = "Info-App.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -539,6 +515,7 @@
 				0A1F1E0F213B7C8400E0FD1A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 		11AC1FBFE252F316F303030E /* Build configuration list for PBXNativeTarget "BurstCoupon (App)" */ = {
 			isa = XCConfigurationList;

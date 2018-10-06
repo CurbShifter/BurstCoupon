@@ -1,4 +1,4 @@
-![BurstCoupon](https://github.com/CurbShifter/BurstCoupon/blob/master/Source/img/burst-coupon.png)
+![logo](https://raw.githubusercontent.com/CurbShifter/BurstCoupon/master/Source/img/burst-coupon.png)
 
 BurstCoupon
 -
@@ -29,7 +29,7 @@ Through this code / concept the following applications can be developed;
 
 Trusted creator
 -
-The coupon execution is trust-less. But the recipient needs to trust the coupon issuer to give a valid coupon with the expected transaction. As the recipient is not able to validate the contents of the transaction before decryption.
+The coupon execution is trust-less. But the recipient needs to trust the coupon issuer to give a valid coupon with the expected transaction. As the recipient is not able to validate the contents and signature of the transaction before the decryption.
 
 When the coupon is claimed/broadcast, the wallet of the coupon issuer needs to have enough balance to have the transaction accepted into the memory pool !
 
@@ -78,7 +78,7 @@ example output:
 
 The claim page is very straight forward. Enter the coupon code and the password can click Claim coupon. You will be prompted on the success or failure. 
 
-IMPORTANT: You have the option to let the dApp 'remember' the pass phrase. But the local storage is only obscured and currently not recommended for use.
+**IMPORTANT**: You have the option to 'remember' the pass phrase. But the local storage is only obscured and currently not recommended for use.
 
 Online claim page
 -
@@ -108,34 +108,23 @@ Claiming the coupon
 
 Future development
 -
-Depending on community demand or business requests;
-
-- Adding other transaction types like;
-- multi-outs a group can benefit from 1 coupon. 
-- (Encrypted) Messages. Possible 3rd party release of the message/info.
-- Adding transaction references. This could allow escrows to be released by 1 party broadcasting both transactions (to sign the escrow and release the funds). Where the other party has the option to only relay the password without the need to access a node.
-- A static html page to make coupons removing the need of a dApp binary.
-- Data encryption only for the signature. To be able to readout tx data. For displaying details during the claim process.
+[Project board](https://github.com/CurbShifter/BurstCoupon/projects/1)
 
 Building
 -
 The msvc2013 / xcode projects are included. You will need to download and include these libraries;
 
+	BurstLib http://github.com/CurbShifter/BurstLib
     Juce https://www.juce.com
-    boost++ https://www.boost.org/
 
-Included in source:
+js libraries
 
-	sha256 by Brad Conte https://github.com/B-Con/crypto-algorithms
-	CURVE25519 Modified by mko, by Matthijs van Duin, based on work by Daniel J Bernstein
-
-	js:
 	sha256 https://github.com/emn178/js-sha256 (MIT)
 	Blowfish Alexandr Gorlov https://github.com/agorlov/javascript-blowfish (MIT)
 
 
 ----
-You can reach me through github or discord  [https://discord.gg/KsFf3jb](https://discord.gg/KsFf3jb "https://discord.gg/KsFf3jb") username: @CurbShifter#9411
+You can reach me through discord  [https://discord.gg/KsFf3jb](https://discord.gg/KsFf3jb "https://discord.gg/KsFf3jb") or my username at protonmail
 
 Please support the developers of the software you use. Value for value. BURST-WN56-VW53-7B6V-9YAFW
 

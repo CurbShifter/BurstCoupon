@@ -10,29 +10,11 @@
     <Filter Include="BurstCoupon\Source\img">
       <UniqueIdentifier>{FE71AB40-7D50-EE49-8107-AC1E26248FDD}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BurstCoupon\Source\burst">
-      <UniqueIdentifier>{29AB2B6C-9A8F-CCCE-CF6F-FFC1BA6FE928}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BurstCoupon\Source\burst\crypto">
-      <UniqueIdentifier>{4CCE618B-02C3-D672-DC81-089F296D38CD}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Juce Library Code">
       <UniqueIdentifier>{8B4D1BAA-6DB4-CAEC-A0FA-271F354D5C61}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\burst\crypto\Crytpo.cpp">
-      <Filter>BurstCoupon\Source\burst\crypto</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\burst\crypto\curve25519_i64.c">
-      <Filter>BurstCoupon\Source\burst\crypto</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\burst\crypto\sha256.cpp">
-      <Filter>BurstCoupon\Source\burst\crypto</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\burst\BurstAPI.cpp">
-      <Filter>BurstCoupon\Source\burst</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\InterfaceComponent.cpp">
       <Filter>BurstCoupon\Source</Filter>
     </ClCompile>
@@ -87,23 +69,8 @@
     <ClCompile Include="..\..\JuceLibraryCode\juce_video.cpp">
       <Filter>Juce Library Code</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\burst\crypto\blowfish.cpp">
-      <Filter>BurstCoupon\Source\burst\crypto</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\burst\crypto\Crypto.hpp">
-      <Filter>BurstCoupon\Source\burst\crypto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\burst\crypto\curve25519_i64.h">
-      <Filter>BurstCoupon\Source\burst\crypto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\burst\crypto\sha256.h">
-      <Filter>BurstCoupon\Source\burst\crypto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\burst\BurstAPI.h">
-      <Filter>BurstCoupon\Source\burst</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\InterfaceComponent.h">
       <Filter>BurstCoupon\Source</Filter>
     </ClInclude>
@@ -124,9 +91,6 @@
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>Juce Library Code</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\burst\crypto\blowfish.h">
-      <Filter>BurstCoupon\Source\burst\crypto</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
